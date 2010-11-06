@@ -1,10 +1,11 @@
 require 'init'
 require 'neural_networks/learning_methods/learning_network'
-require 'console_logger'
 
 learning_rate = 1
 
-network = LearningNetwork.new [1,-1], ConsoleLogger.new
+network = LearningNetwork.new [1,-1] do |inputs,required_output,output,weight_modifications|
+  puts "For pattern #{inputs}, result = #{output}, weight modifications = #{weight_modifications.to_a}"
+end
 
 block = Proc.new do |input_item, output, required_output|
   learning_rate * input_item * output
