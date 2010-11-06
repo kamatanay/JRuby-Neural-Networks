@@ -1,15 +1,15 @@
 require 'init'
 require 'neural_networks/common_functions/bipolar'
-require 'neural_networks/hopefield/hopefield_trained_network'
+require 'neural_networks/hopfield/hopfield_trained_network'
 require 'matrix'
 
-class HopefieldNetwork
+class HopfieldNetwork
 
   Array.send :include, CommonFunctions::Bipolar
 
   def self.trained_using *patterns
     weight_matrix = patterns.inject(Matrix.zero patterns.first.size){ |weights,pattern| weights+weights_for(pattern) }
-    HopefieldTrainedNetwork.new weight_matrix
+    HopfieldTrainedNetwork.new weight_matrix
   end
 
   private

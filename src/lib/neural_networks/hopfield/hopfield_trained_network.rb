@@ -1,4 +1,4 @@
-class HopefieldTrainedNetwork
+class HopfieldTrainedNetwork
 
   def initialize weight_matrix
     @weight_matrix = weight_matrix
