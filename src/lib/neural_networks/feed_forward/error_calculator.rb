@@ -8,15 +8,25 @@ class ErrorCalculator
   end
 
   def update_error output, ideal
-    output.each_with_index do |output_value,index|
-      delta = ideal[index]-output_value
-      @global_error = @global_error+(delta*delta)
-    end
-    @count_of_outputs = @count_of_outputs+ideal.size 
+    output.each_with_index { |output_value,index| add_to_global_error delta_square(ideal[index], output_value) }
+    update_count_of_outputs ideal.size 
   end
 
   def root_mean_square_error
-    Math.sqrt(@global_error/@count_of_outputs)
+    Math.sqrt @global_error/@count_of_outputs
+  end
+
+  private
+  def delta_square ideal, output
+    (ideal-output)**2        
+  end
+
+  def add_to_global_error value
+    @global_error += value
+  end
+
+  def update_count_of_outputs increment
+    @count_of_outputs += increment
   end
 
 end
