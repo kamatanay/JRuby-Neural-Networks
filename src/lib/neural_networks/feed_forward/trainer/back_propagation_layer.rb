@@ -21,7 +21,8 @@ class BackPropagationLayer
     enhanced_with_momemtun = @matrix_delta * momentum
     @matrix_delta = enhanced_with_learning_rate + enhanced_with_momemtun
     @accumulated_matrix_delta = nil
-    next_backpropagation_layer.feed_forward_layer.matrix = next_backpropagation_layer.feed_forward_layer.matrix + @matrix_delta    
+    next_backpropagation_layer.feed_forward_layer.matrix = next_backpropagation_layer.feed_forward_layer.matrix + @matrix_delta
+    self
   end
 
   private
@@ -51,7 +52,8 @@ class BackPropagationLayer
         end
         accumulate_threshold_delta :for => next_neuron, :using => next_backpropagation_layer.error_delta[next_neuron]
       end
-      @error_delta = (0..@error.size-1).to_a.collect{|index| calculate_delta(@error[index],@feed_forward_layer.output[index]) }      
+      @error_delta = (0..@error.size-1).to_a.collect{|index| calculate_delta(@error[index],@feed_forward_layer.output[index]) }
+      self
     end
 
     private

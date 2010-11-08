@@ -11,18 +11,8 @@ class FeedForwardNetworkBuilder
     extend type
   end
 
-  def using_inputs(inputs)
-    @inputs = inputs
-    self
-  end
-
-  def using_outputs(outputs)
-    @outputs = outputs
-    self
-  end
-
   def train_with_backpropagation
-    BackPropagation.new FeedForwardNetwork.new(@layers), @layers, @inputs, @outputs, 0.7, 0.9
+    BackPropagation.new FeedForwardNetwork.new(@layers), @layers
   end
 
   module InputLayerAcceptor
