@@ -3,7 +3,7 @@ require 'neural_networks/feed_forward/feed_forward_network_builder'
 require 'neural_networks/feed_forward/feed_forward_layer'
 
 INPUTS = [ [ 0.0, 0.0 ], [ 1.0, 0.0 ], [ 0.0, 1.0 ], [ 1.0, 1.0 ] ]
-IDEAL_OUTPUTS = [ [ 0.0 ], [ 1.0 ], [ 1.0 ], [ 0.0 ] ] 
+IDEAL_OUTPUTS = [ [ 0.0 ], [ 1.0 ], [ 1.0 ], [ 1.0 ] ] 
 
 builder = FeedForwardNetworkBuilder.new
 network_builder = builder.
