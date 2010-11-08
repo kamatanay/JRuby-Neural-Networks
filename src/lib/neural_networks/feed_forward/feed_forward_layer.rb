@@ -14,32 +14,39 @@ class FeedForwardLayer
 
 
   private
-  def initialize_weight_matrix input_size
-    rows = Array.new(input_size+1,Array.new(@neuron_count,0).collect{ (rand/(rand)) * ((-1.0) ** rand(2)) })
-    Matrix[*rows]
-  end
-
+  
   def input_matrix_for inputs
     Matrix.row_vector(inputs+[1.0])
   end
 
   module InputLayer
     def output_for inputs
-      @output = inputs.collect do |value|
-        apply_activation value 
-      end
+      @output = inputs.collect { |value| apply_activation value } 
     end
   end
 
   module ProcessingLayer
+
     def output_for inputs
-      @matrix ||= initialize_weight_matrix inputs.size
+      matrix = weight_matrix inputs.size
       input_matrix = input_matrix_for inputs
-      @output = (0..@neuron_count-1).to_a.collect do |index|
-        weight_column = Matrix.column_vector @matrix.column(index)
-        apply_activation((input_matrix*weight_column)[0,0])
-      end
+      @output = calculate_output(input_matrix, matrix)
     end
+
+    private
+
+    def calculate_output(input_matrix, matrix)
+      output_array_with_neuron_positions.collect { |index| apply_activation input_matrix.product_with_given_column(matrix,index) }
+    end
+        
+    def weight_matrix input_size
+      @matrix ||= Matrix.randomize input_size+1, neuron_count
+    end
+
+    def output_array_with_neuron_positions
+      (0..@neuron_count-1).to_a            
+    end
+    
   end
 
 end
