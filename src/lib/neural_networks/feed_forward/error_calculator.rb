@@ -9,7 +9,7 @@ class ErrorCalculator
 
   def update_error output, ideal
     output.each_with_index { |output_value,index| add_to_global_error delta_square(ideal[index], output_value) }
-    update_count_of_outputs ideal.size 
+    update_count_of_outputs ideal.size
   end
 
   def root_mean_square_error
