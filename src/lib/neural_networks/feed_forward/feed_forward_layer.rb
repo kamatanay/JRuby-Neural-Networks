@@ -10,9 +10,8 @@ class FeedForwardLayer
 
   TOO_BIG = 1.0E20
 
-  def initialize count_of_neuron_in_this_layer, type = FeedForwardLayer::ProcessingLayer
+  def initialize count_of_neuron_in_this_layer
     @neuron_count = count_of_neuron_in_this_layer
-    extend type
   end
 
 
