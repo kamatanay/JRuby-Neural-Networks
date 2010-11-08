@@ -5,8 +5,6 @@ require 'matrix'
 
 class HopfieldNetwork
 
-  Array.send :include, CommonFunctions::Bipolar
-
   def self.trained_using *patterns
     weight_matrix = patterns.inject(Matrix.zero patterns.first.size){ |weights,pattern| weights+weights_for(pattern) }
     HopfieldTrainedNetwork.new weight_matrix

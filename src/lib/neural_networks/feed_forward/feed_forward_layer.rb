@@ -1,17 +1,15 @@
 require 'init'
 require 'matrix'
+require 'neural_networks/feed_forward/activations/sigmoid'
 
 class FeedForwardLayer
 
   attr_reader :neuron_count, :output
   attr_accessor :matrix
 
-  TOO_SMALL = -1.0E20
-
-  TOO_BIG = 1.0E20
-
-  def initialize count_of_neuron_in_this_layer
+  def initialize count_of_neuron_in_this_layer, activation_method = Sigmoid
     @neuron_count = count_of_neuron_in_this_layer
+    extend activation_method
   end
 
 
@@ -25,26 +23,10 @@ class FeedForwardLayer
     Matrix.row_vector(inputs+[1.0])
   end
 
-  def sigmoid_of value
-    sigmoid = 1.0 / (1.0 + bound(Math.exp(-1.0 * value)))
-    sigmoid
-  end
-
-  def bound value
-      if (value < TOO_SMALL)
-          return TOO_SMALL
-      else if (value > TOO_BIG)
-          return TOO_BIG
-        else
-          return value
-        end
-      end
-  end
-
   module InputLayer
     def output_for inputs
       @output = inputs.collect do |value|
-        sigmoid_of value 
+        apply_activation value 
       end
     end
   end
@@ -55,7 +37,7 @@ class FeedForwardLayer
       input_matrix = input_matrix_for inputs
       @output = (0..@neuron_count-1).to_a.collect do |index|
         weight_column = Matrix.column_vector @matrix.column(index)
-        sigmoid_of (input_matrix*weight_column)[0,0]
+        apply_activation((input_matrix*weight_column)[0,0])
       end
     end
   end

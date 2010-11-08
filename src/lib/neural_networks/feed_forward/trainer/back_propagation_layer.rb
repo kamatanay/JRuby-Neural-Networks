@@ -5,10 +5,6 @@ class BackPropagationLayer
 
   attr_reader :feed_forward_layer, :error_delta, :error
 
-  TOO_SMALL = -1.0E20
-
-  TOO_BIG = 1.0E20  
-
   def initialize feed_forward_layer, layer_type = BackPropagationLayer::PropagationLayer
     @feed_forward_layer = feed_forward_layer
     @error = array_of_neuron_count
@@ -34,24 +30,9 @@ class BackPropagationLayer
   end
 
   def calculate_delta error, output
-    error * derivative_function(output)
+    error * @feed_forward_layer.apply_activation_derivative(output)
   end
-
-  def derivative_function value
-    bound(value * (1.0 - value))
-  end
-
-  def bound value
-      if (value < TOO_SMALL)
-          return TOO_SMALL
-      else if (value > TOO_BIG)
-          return TOO_BIG
-        else
-          return value
-        end
-      end
-  end  
-
+  
   module OutputLayer
     def calculate_error(outputs, ideal)
       @error = (0..outputs.size-1).to_a.collect{ |index| ideal[index] - outputs[index] }
