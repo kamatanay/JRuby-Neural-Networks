@@ -19,7 +19,7 @@ class BackPropagationLayer
     enhance_metrix_delta_with_momemtun = matrix_delta * momentum
     set_matrix_delta(enhance_accumulated_matrix_delta_with_learning_rate + enhance_metrix_delta_with_momemtun)
     next_backpropagation_layer.feed_forward_layer.matrix += matrix_delta
-    clear_accumulated_matrix_delta    
+    clear_accumulated_matrix_delta
     self
   end
 
@@ -102,7 +102,7 @@ class BackPropagationLayer
     end
 
     def initialize_error_propagation next_backpropagation_layer
-      @next_backpropagation_layer = next_backpropagation_layer
+      @next_backpropagation_layer ||= next_backpropagation_layer
       @accumulated_matrix_delta ||= next_backpropagation_layer.feed_forward_layer.matrix.collect{0.0}
       @matrix_delta ||= next_backpropagation_layer.feed_forward_layer.matrix.collect{0.0}
       @bias_row ||= @feed_forward_layer.neuron_count            
