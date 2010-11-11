@@ -12,10 +12,9 @@ backpropagation_trainer = builder.
               add_layer(FeedForwardLayer.new 1).
               train_with_backpropagation
 
-error = nil
-5000.times do
+5000.times do |epoch_count|
   error = backpropagation_trainer.iteration INPUTS, IDEAL_OUTPUTS, 0.7, 0.9
-  puts error
+  puts "Epoch: #{epoch_count} Error: #{error}"
 end
 
 puts ""

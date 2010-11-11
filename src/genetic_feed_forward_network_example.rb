@@ -14,9 +14,12 @@ genetic = Genetic.new(INPUTS, IDEAL_OUTPUTS, 5000, 0.3, 0.4) do
               build
 end
 
+epoch_count = 0;
+
 begin
   genetic.iteration
-  puts genetic.error
+  epoch_count += 1
+  puts "Epoch: #{epoch_count} Error: #{genetic.error}"
 end while genetic.error > 0.01
 
 puts ""
