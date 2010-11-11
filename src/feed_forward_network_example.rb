@@ -15,7 +15,10 @@ backpropagation_trainer = builder.
 error = nil
 5000.times do
   error = backpropagation_trainer.iteration INPUTS, IDEAL_OUTPUTS, 0.7, 0.9
+  puts error
 end
+
+puts ""
 
 network = backpropagation_trainer.network
 
