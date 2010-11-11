@@ -11,8 +11,12 @@ class FeedForwardNetworkBuilder
     extend type
   end
 
+  def build
+    FeedForwardNetwork.new(@layers)  
+  end
+
   def train_with_backpropagation
-    BackPropagation.new FeedForwardNetwork.new(@layers), @layers
+    BackPropagation.new build, @layers
   end
 
   module InputLayerAcceptor

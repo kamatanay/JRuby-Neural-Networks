@@ -5,7 +5,11 @@ module CommonFunctions
     module ClassFunctions
 
       def randomize(row_size, column_size)
-        rows = Array.new(row_size,Array.new(column_size,0).collect{ (rand/(rand)) * ((-1.0) ** rand(2)) })
+        rows = (0...row_size).collect do
+          (0...column_size).collect do
+            rand * (-1 ** rand(3))
+          end
+        end
         Matrix[*rows]
       end
 

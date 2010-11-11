@@ -18,6 +18,16 @@ class FeedForwardNetwork
     error_calculator.root_mean_square_error
   end
 
+  def weights_to_packed_array
+    initialize_network_weight_matrix
+    processing_layers.inject([]) { |array, layer| array + layer.packed_weight_matrix }
+  end
+
+  def weights_from_packed_array array
+    initialize_network_weight_matrix
+    processing_layers.inject(array){ |array,layer| layer.weight_matrix_from_packed_array array }
+  end
+
   private
 
   def initialize_network_layers layers
@@ -36,6 +46,14 @@ class FeedForwardNetwork
 
   def processing_layers
     (@hidden_layers + [@output_layer])
+  end
+
+  def input_layer
+    @input_layer
+  end
+
+  def initialize_network_weight_matrix
+    processing_layers.inject(input_layer) { |previous_layer, current_layer| current_layer.initialize_weight_matrix(previous_layer.neuron_count) }
   end
 
 end

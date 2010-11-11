@@ -33,6 +33,26 @@ class FeedForwardLayer
       @output = calculate_output(input_matrix, matrix)
     end
 
+    def initialize_weight_matrix input_size
+      weight_matrix input_size
+      self
+    end
+
+    def packed_weight_matrix
+      @matrix.to_a.flatten
+    end
+
+    def weight_matrix_from_packed_array array
+      values_array = array
+      weight_array = (0...@matrix.row_size).collect do
+        value = values_array[0...@matrix.column_size]
+        values_array = values_array[@matrix.column_size..-1]
+        value
+      end
+      @matrix = Matrix[*weight_array]
+      values_array
+    end
+
     private
 
     def calculate_output(input_matrix, matrix)
